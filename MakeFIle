@@ -1,0 +1,14 @@
+CC = gcc
+CFLAGS = -Wall -g
+TARGET = linkedlist
+
+all: $(TARGET)
+
+$(TARGET): main.o
+	$(CC) $(CFLAGS) -o $(TARGET) main.o
+
+main.o: main.c linkedlist.h
+	$(CC) $(CFLAGS) -c main.c
+
+clean:
+	rm -f *.o $(TARGET)
