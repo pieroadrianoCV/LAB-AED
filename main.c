@@ -74,6 +74,19 @@ struct node* insertAtPosition(struct node* head, int num, int position) {
     return head;
 }
 
+struct node* searchNode(struct node* head, int num) {
+    struct node* current = head;
+
+    while (current != NULL) {
+        if (current->data == num) {
+            return current;
+        }
+        current = current->next;
+    }
+
+    return NULL;
+}
+
 void printList(struct node* head) {
     struct node* current = head;
     while (current != NULL) {
@@ -139,19 +152,46 @@ struct node* deleteNode(struct node* head, int num) {
     return head;
 }
 
-struct node* searchNode(struct node* head, int num) {
+struct node* deleteInitNode(struct node* head) {
     struct node* current = head;
+    struct node* prev = NULL;
 
-    while (current != NULL) {
-        if (current->data == num) {
-            return current;
-        }
+    if (current != NULL) {
+        head = current->next;
+        free(current);
+        return head;
+    }
+
+    if (current == NULL) {
+        printf("LIsta vacia");
+        return head;
+    }
+
+    prev->next = current->next;
+    free(current);
+
+    return head;
+}
+
+struct node* deleteFinalNode(struct node* head) {
+    struct node* current = head;
+    struct node* prev = NULL;
+
+    if (current == NULL) {
+        printf("LIsta vacia");
+        return head;
+    }
+
+    while (current->next != NULL) {
+        prev = current;
         current = current->next;
     }
 
-    return NULL;
-}
+    prev->next = current->next;
+    free(current);
 
+    return head;
+}
 
 int main() {
     struct node* head = BuildOneTwoThree();
@@ -159,15 +199,15 @@ int main() {
     head = insertFinal(head, 5);
     head = insertAtPosition(head, 4, 3);
     head = orderList(head);
-    head = deleteNode(head, 2);
+    head = deleteFinalNode(head);
 
     int valueToSearch = 2;
     struct node* foundNode = searchNode(head, valueToSearch);
 
     if (foundNode != NULL) {
-        printf("Nodo con valor %d encontrado en la lista.\n", foundNode->data);
+        printf("Valor %d encontrado en la lista.\n", foundNode->data);
     } else {
-        printf("Nodo con valor %d no encontrado en la lista.\n", valueToSearch);
+        printf("Valor %d no encontrado en la lista.\n", valueToSearch);
     }
 
     printList(head);
