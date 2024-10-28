@@ -83,11 +83,92 @@ void printList(struct node* head) {
     printf("NULL\n");
 }
 
+struct node* orderList(struct node* head) {
+    if (head == NULL) {
+        return head;
+    }
+    
+    int swapped;
+    struct node* ptr1;
+    struct node* lptr = NULL;
+
+    do {
+        swapped = 0;
+        ptr1 = head;
+
+        while (ptr1->next != lptr) {
+            if (ptr1->data > ptr1->next->data) {
+                int temp = ptr1->data;
+                ptr1->data = ptr1->next->data;              
+                ptr1->next->data = temp;
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+
+    } while (swapped);
+
+    return head;
+}
+
+
+struct node* deleteNode(struct node* head, int num) {
+    struct node* current = head;
+    struct node* prev = NULL;
+
+    if (current != NULL && current->data == num) {
+        head = current->next;
+        free(current);
+        return head;
+    }
+
+    while (current != NULL && current->data != num) {
+        prev = current;
+        current = current->next;
+    }
+
+    if (current == NULL) {
+        printf("El valor %d no se encuentra en la lista.\n", num);
+        return head;
+    }
+
+    prev->next = current->next;
+    free(current);
+
+    return head;
+}
+
+struct node* searchNode(struct node* head, int num) {
+    struct node* current = head;
+
+    while (current != NULL) {
+        if (current->data == num) {
+            return current;
+        }
+        current = current->next;
+    }
+
+    return NULL;
+}
+
+
 int main() {
     struct node* head = BuildOneTwoThree();
     head = insertInit(head, 0);
     head = insertFinal(head, 5);
     head = insertAtPosition(head, 4, 3);
+    head = orderList(head);
+    head = deleteNode(head, 2);
+
+    int valueToSearch = 2;
+    struct node* foundNode = searchNode(head, valueToSearch);
+
+    if (foundNode != NULL) {
+        printf("Nodo con valor %d encontrado en la lista.\n", foundNode->data);
+    } else {
+        printf("Nodo con valor %d no encontrado en la lista.\n", valueToSearch);
+    }
 
     printList(head);
 

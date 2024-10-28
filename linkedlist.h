@@ -11,5 +11,8 @@ struct node* insertInit(struct node* head, int num);
 struct node* insertFinal(struct node* head, int num);
 struct node* insertAtPosition(struct node* head, int num, int position);
 void printList(struct node* head);
+struct node* orderList(struct node* head);
+struct node* deleteNode(struct node* head, int num);
+struct node* searchNode(struct node* head, int num);
 
 #endif
