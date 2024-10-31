@@ -110,7 +110,7 @@ struct node* orderList(struct node* head) {
         ptr1 = head;
 
         while (ptr1->next != lptr) {
-            if (ptr1->data > ptr1->next->data) {
+            if (ptr1 != NULL) { // solo se modifica para revertir la lista
                 int temp = ptr1->data;
                 ptr1->data = ptr1->next->data;              
                 ptr1->next->data = temp;
@@ -194,12 +194,12 @@ struct node* deleteFinalNode(struct node* head) {
 }
 
 int main() {
-    struct node* head = BuildOneTwoThree();
+    struct node* head = BuildOneTwoThree(); // 0 1 2 3 5
     head = insertInit(head, 0);
     head = insertFinal(head, 5);
-    head = insertAtPosition(head, 4, 3);
+    //head = insertAtPosition(head, 4, 3);
     head = orderList(head);
-    head = deleteFinalNode(head);
+    //head = deleteFinalNode(head);
 
     int valueToSearch = 2;
     struct node* foundNode = searchNode(head, valueToSearch);
